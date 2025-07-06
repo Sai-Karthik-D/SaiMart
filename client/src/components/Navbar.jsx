@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
-
   const {
     user,
     setUser,
