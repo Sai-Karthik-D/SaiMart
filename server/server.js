@@ -11,32 +11,42 @@ import cartRouter from './routes/cartRoute.js';
 import addressRouter from './routes/addressRoute.js';
 import orderRouter from './routes/orderRoute.js';
 
-
-const app =express();
-const port =process.env.PORT || 4000;
+const app = express();
+const port = process.env.PORT || 4000;
 
 await connectDB();
 await connectCloudinary();
-//allow mutliple origins
-const allowedOrigins =['http://localhost:5173']
-//MiddleWare configuration
+
+// ✅ Allow multiple origins (local + Vercel frontend)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://saimart-app.vercel.app'
+];
+
+// ✅ Custom CORS middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: allowedOrigins ,credentials : true}));
 
+// ✅ Routes
+app.get('/', (req, res) => res.send("API is Working"));
+app.use('/api/user', userRouter);
+app.use('/api/seller', sellerRouter);
+app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/address', addressRouter);
+app.use('/api/order', orderRouter);
 
-app.get('/',(req,res)=> res.send("API is Working"));
-app.use('/api/user', userRouter)
-app.use('/api/seller', sellerRouter)
-app.use('/api/product', productRouter)
-app.use('/api/cart', cartRouter)
-app.use('/api/product', productRouter)
-app.use('/api/cart', cartRouter)
-app.use('/api/product', productRouter)
-app.use('/api/address', addressRouter)
-app.use('/api/order', orderRouter)
-
-
-app.listen(port,()=>{
-    console.log(`server is running on http://localhost:${port}`)
-})
+app.listen(port, () => {
+  console.log(`server is running on http://localhost:${port}`);
+});
