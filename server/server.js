@@ -17,6 +17,7 @@ const port = process.env.PORT || 4000;
 await connectDB();
 await connectCloudinary();
 
+//hi
 // ✅ Allow multiple origins (local + Vercel frontend)
 const allowedOrigins = [
   'http://localhost:5173',
