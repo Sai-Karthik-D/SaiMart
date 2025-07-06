@@ -14,28 +14,36 @@ import orderRouter from './routes/orderRoute.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
+// Connect to DB and Cloudinary
 await connectDB();
 await connectCloudinary();
 
-//hi
-// ✅ Allow multiple origins (local + Vercel frontend)
+// ✅ Safe list of allowed frontend origins (no regex)
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://saimart-app.vercel.app'
+  'https://saimart-app.vercel.app',
+  'https://saimart-frontend.vercel.app'
 ];
 
-// ✅ Custom CORS middleware
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin || 
+      allowedOrigins.includes(origin) || 
+      origin.endsWith('.vercel.app') // ✅ Allow Vercel preview URLs too
+    ) {
       callback(null, true);
     } else {
+      console.log('🚫 Blocked by CORS:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
-}));
+  credentials: true,
+};
 
+// ✅ Middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // For preflight requests
 app.use(express.json());
 app.use(cookieParser());
 
@@ -48,6 +56,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/address', addressRouter);
 app.use('/api/order', orderRouter);
 
+// ✅ Start Server
 app.listen(port, () => {
-  console.log(`server is running on http://localhost:${port}`);
+  console.log(`✅ Server running on http://localhost:${port}`);
 });

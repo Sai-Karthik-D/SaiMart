@@ -20,9 +20,10 @@ export const register = async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // ✅ secure only in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // ✅ None for cross-origin
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true,         // ✅ Always secure
+      sameSite: 'None',     // ✅ Allow cross-origin cookies (required by Vercel)
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.json({ success: true, user: { email: newUser.email, name: newUser.name } });
@@ -47,8 +48,8 @@ export const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      secure: true,
+      sameSite: 'None',
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -82,8 +83,9 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie('token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      secure: true,
+      sameSite: 'None',
+      path: '/',
     });
 
     return res.json({ success: true, message: "Logged out" });
