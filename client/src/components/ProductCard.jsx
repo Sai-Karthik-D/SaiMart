@@ -12,26 +12,28 @@ const ProductCard = ({ product }) => {
           navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
           scrollTo(0, 0);
         }}
-        className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-[240px]"
+        className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer w-full sm:max-w-[240px] flex flex-col"
       >
+        {/* Image */}
         <img
           className="w-full h-40 object-contain p-4"
           src={product.image[0]}
           alt={product.name}
         />
 
-        <div className="bg-[#2e7d32] text-white p-4 rounded-tl-[40px]">
-          <div className="font-semibold text-lg mb-1">{product.name}</div>
-
-          <div className="flex gap-1 mb-1 text-yellow-300 text-sm">
-            {"★".repeat(product.rating)}{"☆".repeat(5 - product.rating)}
+        {/* Details */}
+        <div className="bg-[#2e7d32] text-white p-4 rounded-tl-[40px] flex-1 flex flex-col justify-between">
+          <div>
+            <div className="font-semibold text-lg mb-1">{product.name}</div>
+            <div className="flex gap-1 mb-1 text-yellow-300 text-sm">
+              {"★".repeat(product.rating)}{"☆".repeat(5 - product.rating)}
+            </div>
+            <p className="text-sm text-gray-200 mb-2 line-clamp-2">
+              {product.description?.[0] || "No description available"}
+            </p>
           </div>
 
-          <p className="text-sm text-gray-200 mb-2 line-clamp-2">
-            {product.description?.[0] || "No description available"}
-          </p>
-
-          <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center justify-between mt-auto pt-2">
             <p className="text-sm font-medium">
               {currency}{product.offerPrice}
               <span className="line-through text-gray-300 ml-1 text-xs">
