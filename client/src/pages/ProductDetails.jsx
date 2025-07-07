@@ -82,7 +82,7 @@ const ProductDetails = () => {
               .map((_, i) => (
                 <img
                   key={i}
-                  src={i < product.rating ? assets.star_icon : assets.star_dull_icon}
+                  src={i < 4 ? assets.star_icon : assets.star_dull_icon}
                   alt="rating"
                   className="w-4"
                 />
