@@ -69,8 +69,11 @@ const removeFromCart = (productId) => {
   const updatedCart = { ...cartItems };
   delete updatedCart[productId];
   setCartItems(updatedCart);
-  toast.success("removed from cart");
+
   localStorage.setItem("saimart-cart", JSON.stringify(updatedCart));
+
+  // ✅ Show toast message
+  toast.success("Removed from cart");
 };
 
 
