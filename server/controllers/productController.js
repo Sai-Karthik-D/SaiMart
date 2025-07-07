@@ -81,3 +81,12 @@ export const changeStock = async (req, res) => {
   }
 };
 
+export const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Product.findByIdAndDelete(id);
+    res.json({ success: true, message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Deletion failed" });
+  }
+};

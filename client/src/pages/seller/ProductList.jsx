@@ -19,11 +19,22 @@ const toggleStock = (id) => {
 };
 
 
-  const deleteProduct = (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      setLocalProducts((prev) => prev.filter((prod) => prod._id !== id));
+const deleteProduct = async (id) => {
+  if (window.confirm('Are you sure you want to delete this product?')) {
+    try {
+      const { data } = await axios.delete(`/api/product/delete/${id}`);
+      if (data.success) {
+        setLocalProducts((prev) => prev.filter((prod) => prod._id !== id));
+        toast.success("Product deleted");
+      } else {
+        toast.error(data.message || "Failed to delete");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Server error");
     }
-  };
+  }
+};
+
 
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
