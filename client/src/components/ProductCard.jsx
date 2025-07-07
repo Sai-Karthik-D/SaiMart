@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
           navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
           scrollTo(0, 0);
         }}
-        className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer w-full sm:max-w-[240px] flex flex-col"
+        className="bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-[1.03] transition-all duration-300 cursor-pointer w-full sm:max-w-[240px] flex flex-col"
       >
         {/* Image */}
         <img
