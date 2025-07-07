@@ -25,16 +25,17 @@ const deleteProduct = async (id) => {
     try {
       const { data } = await axios.delete(`/api/product/delete/${id}`);
       if (data.success) {
-        setLocalProducts((prev) => prev.filter((prod) => prod._id !== id));
         toast.success("Product deleted");
+        setLocalProducts((prev) => prev.filter((prod) => prod._id !== id));
       } else {
-        toast.error(data.message || "Failed to delete");
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Server error");
+      toast.error("Server error");
     }
   }
 };
+
 
 
   return (
