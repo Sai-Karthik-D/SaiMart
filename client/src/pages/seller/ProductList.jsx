@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
 
 const ProductList = () => {
   const { products, currency ,changeProductStock } = useAppContext();
