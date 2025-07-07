@@ -78,6 +78,11 @@ const Cart = () => {
         } else {
           toast.error(data.message);
         }
+      } else {
+        // Toast for online payment (placeholder logic)
+        toast.success("Online payment not implemented. Redirecting to payment page...");
+        // Optional: navigate to a placeholder page
+        // navigate("/payment-gateway");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
