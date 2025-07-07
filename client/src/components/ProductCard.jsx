@@ -25,16 +25,11 @@ const ProductCard = ({ product }) => {
         <div className="bg-[#2e7d32] text-white p-4 rounded-tl-[40px] flex-1 flex flex-col justify-between">
           <div>
             <div className="font-semibold text-lg mb-1">{product.name}</div>
-            <div className="flex gap-1 mb-1">
-  {[...Array(5)].map((_, i) => (
-    <img
-      key={i}
-      src={i < (product.rating || 4) ? assets.star_icon : assets.star_dull_icon}
-      alt="rating"
-      className="w-4"
-    />
-  ))}
+           <div className="flex gap-0.5 mb-1 text-yellow-400 text-sm">
+  {"★".repeat(product.rating || 4)}
+  {"☆".repeat(5 - (product.rating || 4))}
 </div>
+
 
             <p className="text-sm text-gray-200 mb-2 line-clamp-2">
               {product.description?.[0] || "No description available"}
